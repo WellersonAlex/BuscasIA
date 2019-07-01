@@ -72,7 +72,7 @@ catole.add_neighbors([pombal])
 pombal.add_neighbors([catole, patos, sousa])
 itaporanga.add_neighbors([patos, monteiro])
 sousa.add_neighbors([pombal])
-# cajazeiras.add_neighbors([sousa, itaporanga])
+#cajazeiras.add_neighbors([sousa, itaporanga])
 
 result = search(joao_pessoa, cajazeiras)
 print(result)
