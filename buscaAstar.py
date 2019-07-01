@@ -13,35 +13,27 @@ class City(object):
     def __repr__(self):
         return self.name
 
-
 def search(initial_city, goal):
     frontier = [{"city": initial_city, "cost": 0, "estimate": 460, "parent": None}]
     explored = set()
     couter = 0
-    explored_frontier = []
-    explored_frontier.extend([initial_city, 460])
-    current_explored = []
+
 
     while True:
+        couter += 1
+        print("Passo",couter,end="")
+        print(".")
 
         if len(frontier) == 0:
             return False
 
+        print_borders(frontier)
+
         chosen = choose_city(frontier)
         explored.add(chosen["city"])
 
-        current_explored.append(chosen)
-
-        for i in current_explored:
-            couter += 1
-            print("Passo", couter)
-            print("Fronteira:")
-            for x in explored_frontier:
-                print(x)
-            print("Explorado: ",chosen["city"])
-            print()
-            current_explored = []
-        explored_frontier = []
+        print("Explorado: ",chosen["city"])
+        print()
 
         if chosen["city"] == goal:
             return chosen
@@ -49,25 +41,21 @@ def search(initial_city, goal):
         for neighbor in chosen["city"].neighbors:
 
             path_cost = neighbor["cost"] + chosen["cost"]
-            estimate_value = neighbor["estimate"] + path_cost
-
-
+            path_estimate_value = neighbor["estimate"] + path_cost
 
             if neighbor["city"] in explored:
                 continue
             else:
                 flag = False
-                explored_frontier.extend([neighbor["city"], estimate_value])
                 for node in frontier:
                     if neighbor["city"] == node["city"]:
                         flag = True
 
-                        if node["estimate"] > estimate_value:
+                        if node["estimate"] > path_estimate_value:
                             frontier.remove(node)
-                            frontier.append({"city": neighbor["city"], "cost": path_cost,"estimate": estimate_value, "parent": chosen})
+                            frontier.append({"city": neighbor["city"], "cost": path_cost,"estimate": path_estimate_value, "parent": chosen})
                 if flag == False:
-                    frontier.append({"city": neighbor["city"], "cost": path_cost, "estimate": estimate_value, "parent": chosen})
-
+                    frontier.append({"city": neighbor["city"], "cost": path_cost, "estimate": path_estimate_value, "parent": chosen})
 
 def choose_city(frontier):
     lower_estimate_node = frontier[0]
@@ -77,6 +65,21 @@ def choose_city(frontier):
             lower_estimate_node = node
     frontier.remove(lower_estimate_node)
     return lower_estimate_node
+
+def print_borders(explored_frontier):
+    size = 1
+    print("Fronteira: ",end="")
+
+    for borders in explored_frontier:
+        print(borders["city"], end="")
+        print(": ",borders["estimate"],end="")
+        if size  == len(explored_frontier):
+            continue
+        else:
+            size += 1
+            if size - 2 < len(explored_frontier):
+                print(", ",end="")
+    print()
 
 
 joao_pessoa = City("João Pessoa")
