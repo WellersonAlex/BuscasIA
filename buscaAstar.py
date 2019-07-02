@@ -77,7 +77,8 @@ def print_borders(explored_frontier):
             continue
         else:
             size += 1
-            if size - 2 < len(explored_frontier):
+            auxiliary_size = size -2
+            if auxiliary_size < len(explored_frontier):
                 print(", ",end="")
     print()
 
