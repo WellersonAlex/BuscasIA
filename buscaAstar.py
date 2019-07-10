@@ -66,19 +66,19 @@ def choose_city(frontier):
     frontier.remove(lower_estimate_node)
     return lower_estimate_node
 
-def print_borders(explored_frontier):
+def print_borders(frontier):
     size = 1
     print("Fronteira: ",end="")
 
-    for borders in explored_frontier:
+    for borders in frontier:
         print(borders["city"], end="")
-        print(": ",borders["estimate"],end="")
-        if size  == len(explored_frontier):
+        print(":",borders["estimate"],end="")
+        if size  == len(frontier):
             continue
         else:
             size += 1
             auxiliary_size = size -2
-            if auxiliary_size < len(explored_frontier):
+            if auxiliary_size < len(frontier):
                 print(", ",end="")
     print()
 
